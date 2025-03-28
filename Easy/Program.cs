@@ -1,8 +1,6 @@
 ﻿using System.Text;
 
-namespace ConsoleApp2;
-
-#region DataProcessor
+#region Data Processor (SUCCESS)
 public class DataProcessor<T>
 {
 	private List<T> _items;
@@ -24,7 +22,7 @@ public class DataProcessor<T>
 }
 #endregion
 
-#region LoggedList
+#region Logged List (SUCCESS)
 /// <summary>
 /// Написать класс которые будет вести себя как List, но будет логгировать добавление элементов
 /// </summary>
@@ -39,7 +37,7 @@ public class LoggerList<T> : List<T>
 }
 #endregion
 
-#region FilteredList
+#region Filtered List (SUCCESS)
 /// <summary>
 /// Реализуй метод, который принимает список объектов и функцию-фильтр, и возвращает только те, что прошли проверку.
 /// </summary>
@@ -52,7 +50,7 @@ public class FilteredList
 }
 #endregion
 
-#region Calculator
+#region Calculator (SUCCESS)
 /// <summary>
 /// Реализуй класс Calculator, который поддерживает операции сложения, вычитания, умножения и деления.
 /// Операции должны задаваться извне через делегаты.
@@ -66,7 +64,7 @@ public class Calculator
 }
 #endregion
 
-#region SafeDictionary
+#region Safe Dictionary (SUCCESS)
 /// <summary>
 /// Создай класс SafeDictionary<TKey, TValue>, который не выбрасывает исключение при попытке доступа к отсутствующему ключу,
 /// а возвращает значение по умолчанию.
@@ -89,7 +87,7 @@ public class SafeDictionary<TKey, TValue> : Dictionary<TKey, TValue>
 }
 #endregion
 
-#region FormattedString
+#region Formatted String (SUCCESS)
 /// <summary>
 /// Напиши расширение ToFormattedString<T>, которое преобразует список объектов в строку,
 /// используя указанный формат (например, "Item: {0}").
@@ -108,7 +106,7 @@ public static class Formatted
 }
 #endregion
 
-#region SummAll
+#region Summ All (SUCCESS)
 /// <summary>
 /// Реализуй метод SumAll, который принимает переменное количество чисел и возвращает их сумму.
 /// </summary>
@@ -126,7 +124,7 @@ public static class Summ
 }
 #endregion
 
-#region Shape
+#region Shape (SUCCESS)
 /// <summary>
 /// Реализуй интерфейс IShape с методом GetArea(). Сделай классы Circle, Square, Rectangle, реализующие этот интерфейс.
 /// </summary>
@@ -168,7 +166,7 @@ public class Circle : IShape
 }
 #endregion
 
-#region GroupByFirstLetter
+#region Group By First Letter (SUCCESS)
 
 /// <summary>
 /// Сделай метод GroupByFirstLetter, который группирует строки из списка по первой букве (без учёта регистра)
@@ -202,51 +200,60 @@ public class Program
 {
 	public static void Main(string[] args)
 	{
+		Console.WriteLine("DATA PROCESSOR");
 		var processor = new DataProcessor<int>(new List<int> { 1, 2, 3, 4, 5 });
-
+		
 		var multy = processor.Process(x => x * 2);
-		foreach (var res in multy)
-			Console.WriteLine(res);
+		Console.WriteLine(string.Join(", ", multy));
 
 		var min = processor.Aggregate(item => item.Min());
 		Console.WriteLine(min);
-
+		Console.WriteLine("====================");
+		
+		Console.WriteLine("LOGGED LIST");
 		var testList = new LoggerList<string>();
 		testList.Add("first");
 		testList.Add("second");
 		testList.Add("third");
+		Console.WriteLine("====================");
 
-		foreach (var list in testList)
-		{
-			Console.WriteLine(list);
-		}
-
+		Console.WriteLine("FILTERED LIST");
 		var filtered = FilteredList.Filter(new List<string> { "Sanya", "Dasha", "Vanya", "Vanya" },
 			name => name == "Vanya");
-		foreach (var item in filtered)
-		{
-			Console.WriteLine(item);
-		}
+		Console.WriteLine(string.Join(", ", filtered));
+		Console.WriteLine("====================");
 
+		Console.WriteLine("CALCULATOR");
 		var calc = new Calculator();
 		var resAdd = calc.Execute(1, 10, (a, b) => a + b);
 		var resultMultiply = calc.Execute(1, 10, (a, b) => a * b);
 		var resultDivide = calc.Execute(1, 10, (a, b) => a / b);
-		Console.WriteLine(resAdd);
-		Console.WriteLine(resultMultiply);
-		Console.WriteLine(resultDivide);
+		Console.WriteLine($"Sum = {resAdd}");
+		Console.WriteLine($"Multiply = {resultMultiply}");
+		Console.WriteLine($"Divide = {resultDivide}");
+		Console.WriteLine("====================");
 
-		var sd = new SafeDictionary<int, string>();
-		sd.Add(1, "one");
-		sd.Add(2, "two");
+		Console.WriteLine("SAFE DICTIONARY");
+		var sd = new SafeDictionary<int, int>();
+		sd.Add(1, 14);
+		sd.Add(2, 22);
 		Console.WriteLine(sd[3]);
+		Console.WriteLine("====================");
 
+		Console.WriteLine("FORMATTED STRING");
 		Console.WriteLine(new List<string> { "one", "two", "three" }.ToFormattedString());
+		Console.WriteLine("====================");
+		
+		Console.WriteLine("SUMM ALL");
 		Console.WriteLine(Summ.SumAll(2, 1, 4, 55.9));
+		Console.WriteLine("====================");
 
+		Console.WriteLine("SHAPE");
 		Console.WriteLine(new Rectangle(5, 4.5).GetArea());
 		Console.WriteLine(new Circle(5).GetArea());
+		Console.WriteLine("====================");
 		
+		Console.WriteLine("GROUP BY FIRST LETTER");
 		var letters = new List<string> {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
 		var grouppedLetters = FirstLetter.GroupByFirstLetter(letters);
 		foreach (var group in grouppedLetters)

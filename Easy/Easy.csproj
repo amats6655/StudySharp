@@ -8,4 +8,8 @@
         <RootNamespace>ConsoleApp2</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="ConsoleTables" Version="2.6.2" />
+    </ItemGroup>
+
 </Project>
